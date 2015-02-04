@@ -1,0 +1,10 @@
+allow url http://isthereagiantsgametoday.com
+allow url http://lauraforrest.com/
+allow url http://dailycavalier.com
+allow url https://github.com/edanaher/willcaltrainsucktoday/
+allow url http://www.impredicative.com/ur/
+rewrite url Main/index 
+rewrite url Main/about about
+exe willcaltrainsucktoday
+
+main
