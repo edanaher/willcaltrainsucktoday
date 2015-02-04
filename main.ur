@@ -9,6 +9,7 @@ fun about () =
   </xml>
 
 fun index () =
+  game <- Giants.getGame();
   return let val now = Date.now () in
   <xml>
     <head>
@@ -18,8 +19,8 @@ fun index () =
     </head>
     <body>
       <p>The date is {[Date.year now]}-{[Date.month now]}-{[Date.day now]}</p>
+      <p>A game is {[game.Who]}</p>
       <a link={about ()}>about</a>
-
     </body>
   </xml>
   end

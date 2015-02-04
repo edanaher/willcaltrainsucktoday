@@ -23,6 +23,11 @@ exe willcaltrainsucktoday
 ffi date
 include date.h
 link date.o
+#
+# Database
+database dbname=willcaltrainsucktoday user=willcaltrainsucktoday
+sql db.sql
 
 # And the modules:
+giants
 main
