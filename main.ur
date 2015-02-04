@@ -9,8 +9,9 @@ fun about () =
   </xml>
 
 fun index () =
-  game <- Giants.getGame();
-  return let val now = Date.now () in
+  now <- Date.now ();
+  game <- Giants.getActiveGame now;
+  return
   <xml>
     <head>
       <title>Will Caltrain suck today?</title>
@@ -23,4 +24,3 @@ fun index () =
       <a link={about ()}>about</a>
     </body>
   </xml>
-  end
