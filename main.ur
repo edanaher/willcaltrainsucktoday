@@ -9,11 +9,17 @@ fun about () =
   </xml>
 
 fun index () =
-  return <xml>
+  return let val now = Date.now () in
+  <xml>
     <head>
       <title>Will Caltrain suck today?</title>
+      <link href="/css/site.css" rel="stylesheet" type="text/css" />
+      <link href="http://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet" type="text/css" />
     </head>
     <body>
+      <p>The date is {[Date.year now]}-{[Date.month now]}-{[Date.day now]}</p>
       <a link={about ()}>about</a>
+
     </body>
   </xml>
+  end
