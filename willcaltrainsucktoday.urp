@@ -20,14 +20,15 @@ rewrite url Main/about about
 exe willcaltrainsucktoday
 #
 # And set up the date ffi...
-ffi date
-include date.h
-link date.o
+ffi c_date
+include c_date.h
+link c_date.o
 #
 # Database
 database dbname=willcaltrainsucktoday user=willcaltrainsucktoday
 sql db.sql
 
 # And the modules:
+date
 giants
 main

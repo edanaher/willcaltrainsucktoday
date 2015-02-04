@@ -18,7 +18,7 @@ fun index () =
       <link href="http://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet" type="text/css" />
     </head>
     <body>
-      <p>The date is {[Date.year now]}-{[Date.month now]}-{[Date.day now]}</p>
+      <p>The date is {[now.Year]}-{[now.Month]}-{[now.Day]}</p>
       <p>A game is {[game.Who]}</p>
       <a link={about ()}>about</a>
     </body>

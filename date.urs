@@ -1,5 +1,1 @@
-type date
-val now : unit -> date
-val day : date -> int
-val month : date -> int
-val year : date -> int
+val now : unit -> { Year : int, Month : int, Day : int }
