@@ -17,7 +17,7 @@ File.open(ARGV[0]) do |file|
     home = (where == "AT&T Park" || where == "O.co Coliseum")
     puts "20#{year}-#{month}-#{day}|#{hour}:#{minute}|#{who}|#{home} (#{where})"
     db.exec("INSERT INTO uw_giants_games
-             (uw_year, uw_month, uw_day, uw_hour, uw_minute, uw_home, uw_who, uw_where) VALUES
-             (20#{year}, #{month}, #{day}, #{hour}, #{minute}, #{home}, '#{who}', '#{where}')")
+             (uw_when, uw_who, uw_where, uw_home) VALUES
+             ('20#{year}-#{month}-#{day} #{hour}:#{minute}', '#{who}', '#{where}', #{home})")
   end
 end

@@ -15,20 +15,15 @@ allow url /css/site.css
 # Let's use shorter URL's
 rewrite url Main/index 
 rewrite url Main/about about
+rewrite url Main/at at
 #
 # No .exe on the executable name
 exe willcaltrainsucktoday
-#
-# And set up the date ffi...
-ffi c_date
-include c_date.h
-link c_date.o
 #
 # Database
 database dbname=willcaltrainsucktoday user=willcaltrainsucktoday
 sql db.sql
 
 # And the modules:
-date
 giants
 main

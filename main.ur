@@ -8,19 +8,33 @@ fun about () =
     </body>
   </xml>
 
+fun check_status when =
+  game <- Giants.getActiveGame when;
+  let val giants_body = case game of
+    None => <xml><p>No Giants game today</p></xml>
+  | Some game => <xml><p>Giants play {[game.Who]} at {[game.Where]}!</p></xml> in
+    return
+    <xml>
+      <head>
+        <title>Will Caltrain suck today?</title>
+        <link href="/css/site.css" rel="stylesheet" type="text/css" />
+        <link href="http://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet" type="text/css" />
+      </head>
+      <body>
+        <p>The date is {[datetimeYear when]}-{[datetimeMonth when + 1]}-{[datetimeDay when]}</p>
+        {giants_body}
+        <a link={about ()}>about</a>
+      </body>
+    </xml>
+  end
+
 fun index () =
-  now <- Date.now ();
-  game <- Giants.getActiveGame now;
-  return
-  <xml>
-    <head>
-      <title>Will Caltrain suck today?</title>
-      <link href="/css/site.css" rel="stylesheet" type="text/css" />
-      <link href="http://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet" type="text/css" />
-    </head>
-    <body>
-      <p>The date is {[now.Year]}-{[now.Month]}-{[now.Day]}</p>
-      <p>A game is {[game.Who]}</p>
-      <a link={about ()}>about</a>
-    </body>
-  </xml>
+  currentTime <- now;
+  let val when = fromDatetime (datetimeYear currentTime) (datetimeMonth currentTime) (datetimeDay currentTime) 0 0 0 in
+  check_status when
+  end
+
+fun at year month day =
+  let val when = fromDatetime year (month - 1) day 0 0 0 in
+  check_status when
+  end
