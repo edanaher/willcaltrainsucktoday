@@ -1,18 +1,19 @@
 body {font-family: Helvetica, Arial, sans-serif; line-height:1.3; text-align:center; width:80%; margin:0 auto;}
-#isthere { margin-top: 5%; font-size: 55px; }
-#yesno { margin-bottom: 1em; border-top:1px solid #D2612F; border-bottom:1px solid #D2612F; padding-bottom:10px;}
-#game { font-size: 50px; }
-#footer { margin: 30px; font-size: 20px; }
+.header { margin-top: 5%; font-size: 55px; }
 
-a:link, a:visited { text-decoration: none; color: #D2612F; }
-a:hover { border-bottom: 2px solid #000; }
-a#counter:hover { border: 0; text-decoration: underline; }
+.yesno { margin-bottom: 12px; border-top:1px solid #000; border-bottom:1px solid #000; padding-bottom:10px; font-family: 'Permanent Marker', arial, sans-serif; font-size: 150px; }
+.giants .yesno { border-top:1px solid #D2612F; border-bottom:1px solid #D2612F; }
+.sharks .yesno { border-top:1px solid #088696; border-bottom:1px solid #088696; }
+#game { font-size: 50px; }
+.footer { margin: 30px; font-size: 20px; }
+
+a:link, a:visited { text-decoration: none; color: #888 ; }
+a:hover { border-bottom: 2px solid #888; }
 
 #game { display: none; }
-.fill-in { font-family: 'Permanent Marker', arial, sans-serif; font-size: 150px; }
-.homeaway { font-weight: bold; font-size: 50px; }
-.home { background: #000; color: #D2612F; }
-.away { background: #FFF; color: #000; }
+.details { font-weight: bold; font-size: 50px; }
+.giants { background: #000; color: #D2612F; }
+.sharks { background: #000; color: #088696; }
 
 
 /* =Responsive Design
@@ -21,38 +22,38 @@ a#counter:hover { border: 0; text-decoration: underline; }
 
 @media screen and (max-width: 980px) {
     body { width: 80%; }
-    #isthere { font-size: 60px; line-height: 1.0; }
+    header { font-size: 60px; line-height: 1.0; }
     #game { font-size: 50px; }
-    #footer { font-size: 20px; }
-    .fill-in { font-size: 100px; }
-    .homeaway { font-size: 34px; }
+    .footer { font-size: 20px; }
+    .yesno { font-size: 100px; }
+    .details { font-size: 34px; }
 }
 
 @media screen and (max-width: 650px) {
     body { width: 80%; }
-    #isthere { font-size: 34px; }
+    header { font-size: 34px; }
     #game { font-size: 50px; }
-    #footer { font-size: 16px; }
-    .fill-in { font-size: 75px; }
-    .homeaway { font-size: 34px; }
+    .footer { font-size: 16px; }
+    .yesno { font-size: 75px; }
+    .details { font-size: 34px; }
 }
 
 @media screen and (max-width: 480px) {
     body { width: 80%; }
-    #isthere { font-size: 40px; }
+    header { font-size: 40px; }
     #game { font-size: 24px; }
-    #footer { font-size: 14px; }
-    .fill-in { font-size: 70px; }
-    .homeaway { font-size: 34px; }
+    .footer { font-size: 14px; }
+    .yesno { font-size: 70px; }
+    .details { font-size: 34px; }
 }
 
 @media screen and (max-width: 320px) {  
     body { width: 80%; }
-    #isthere { font-size: 40px; }
+    header { font-size: 40px; }
     #game { font-size: 24px; }
-    #footer { font-size: 14px; }
-    .fill-in { font-size: 70px; }
-    .homeaway { font-size: 34px; }
+    .footer { font-size: 14px; }
+    .yesno { font-size: 70px; }
+    .details { font-size: 34px; }
 }
 
 @media screen and (max-width: 240px) {

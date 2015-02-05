@@ -8,11 +8,27 @@ fun about () =
     </body>
   </xml>
 
+style yesno
+style header
+style details
+style footer
+style giants
+style sharks
+
 fun check_status when =
-  game <- Giants.getActiveGame when;
-  let val giants_body = case game of
-    None => <xml><p>No Giants game today</p></xml>
-  | Some game => <xml><p>Giants play {[game.Who]} at {[game.Where]}!</p></xml> in
+  giants_game <- Giants.getActiveGame when;
+  sharks_game <- Sharks.getActiveGame when;
+  let val giants_body = case giants_game of
+        None => <xml></xml>
+      | Some game => <xml><div class="details">{[timef "%H:%M" game.When]}: Giants play {[game.Who]} at {[game.Where]}</div></xml>
+      val sharks_body = case sharks_game of
+        None => <xml></xml>
+      | Some game => <xml><div class="details">{[timef "%H:%M" game.When]}: Sharks play {[game.Who]}</div></xml>
+      val (body_class, suck) = case (giants_game, sharks_game) of
+      | (Some _, _) => (giants, True)
+      | (_, Some _) => (sharks, True)
+      | _ => (null, False)
+  in
     return
     <xml>
       <head>
@@ -20,10 +36,12 @@ fun check_status when =
         <link href="/css/site.css" rel="stylesheet" type="text/css" />
         <link href="http://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet" type="text/css" />
       </head>
-      <body>
-        <p>The date is {[datetimeYear when]}-{[datetimeMonth when + 1]}-{[datetimeDay when]}</p>
+      <body class={body_class} >
+        <h1 class="header">Will Caltrain suck today?</h1>
+        <div class="yesno">{[if suck then "Yes" else "No"]}</div>
         {giants_body}
-        <a link={about ()}>about</a>
+        {sharks_body}
+        <div class="footer"><a link={about ()}>about</a></div>
       </body>
     </xml>
   end

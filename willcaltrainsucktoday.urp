@@ -11,11 +11,13 @@ allow url http://fonts.googleapis.com/css?family=Permanent+Marker
 # Css
 file /css/site.css site.css
 allow url /css/site.css
+rewrite style Main/*
 #
 # Let's use shorter URL's
 rewrite url Main/index 
 rewrite url Main/about about
 rewrite url Main/at at
+#
 #
 # No .exe on the executable name
 exe willcaltrainsucktoday
@@ -26,4 +28,5 @@ sql db.sql
 
 # And the modules:
 giants
+sharks
 main
