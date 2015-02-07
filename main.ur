@@ -96,7 +96,7 @@ fun check_status when =
         </div>
         {giants_body}
         {sharks_body}
-        <div class="footer"><a link={about ()}>about</a><span class="contact">{[contact_email]}</span></div>
+        <div class="footer"><a link={about ()}>about</a><div class="contact">{[contact_email]}</div></div>
       </body>
     </xml>
   end
