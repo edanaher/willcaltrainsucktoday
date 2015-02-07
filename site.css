@@ -2,8 +2,10 @@ body {font-family: Helvetica, Arial, sans-serif; line-height:1.3; text-align:cen
 .header { margin-top: 5%; font-size: 55px; }
 
 .yesno { margin-bottom: 12px; border-top:1px solid #000; border-bottom:1px solid #000; padding-bottom:10px; font-family: 'Permanent Marker', arial, sans-serif; font-size: 150px; }
+.morning, .afternoon { display: inline-block; padding-left: 30px; padding-right: 30px; }
 .giants .yesno { border-top:1px solid #D2612F; border-bottom:1px solid #D2612F; }
 .sharks .yesno { border-top:1px solid #088696; border-bottom:1px solid #088696; }
+.doublesuck .yesno { border-top:1px solid #FF0000; border-bottom:1px solid #FF0000; }
 #game { font-size: 50px; }
 .footer { margin: 30px; font-size: 20px; }
 
@@ -12,8 +14,12 @@ a:hover { border-bottom: 2px solid #888; }
 
 #game { display: none; }
 .details { font-weight: bold; font-size: 50px; }
-.giants { background: #000; color: #D2612F; }
-.sharks { background: #000; color: #088696; }
+body.giants, body.sharks, body.doublesuck { background: #000 }
+.giants { color: #D2612F; }
+.sharks { color: #088696; }
+.doublesuck { color: #FF0000; }
+.doublesuck .happy, .giants .happy, .sharks .happy { color: #FFFFFF; }
+.whichtime { font-size: 32px; font-family: Helvetica, Arial, sans-serif}
 
 
 /* =Responsive Design

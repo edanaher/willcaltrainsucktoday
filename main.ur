@@ -14,20 +14,69 @@ style details
 style footer
 style giants
 style sharks
+style doublesuck
+style morning
+style afternoon
+style happy
+style whichtime
+
+datatype suckage = Morning | Afternoon | Happy
+val suckage_eq = mkEq (fn a b => case (a, b) of
+    (Morning, Morning) => True
+  | (Afternoon, Afternoon) => True
+  | (Happy, Happy) => True
+  | _ => False)
+val suckage_show = mkShow (fn a => case a of
+    Morning => "Morning"
+  | Afternoon => "Afternoon"
+  | Happy => "Happy")
+
+fun suck_type game when =
+  let val mkTime = fromDatetime (datetimeYear when) (datetimeMonth when) (datetimeDay when)
+      val morning_start = mkTime 8 0 0
+      val morning_end = mkTime 12 0 0
+      val afternoon_start = mkTime 17 0 0
+      val afternoon_end = mkTime 21 0 0
+      fun gameInRange game start finish = case game of
+          None => False
+        | Some game => (finish >= game.When) && (game.When >= start)
+      in
+    if gameInRange game morning_start morning_end then Morning else
+    if gameInRange game afternoon_start afternoon_end then Afternoon else
+    Happy
+    end
+
 
 fun check_status when =
   giants_game <- Giants.getActiveGame when;
   sharks_game <- Sharks.getActiveGame when;
   let val giants_body = case giants_game of
         None => <xml></xml>
-      | Some game => <xml><div class="details">{[timef "%H:%M" game.When]}: Giants play {[game.Who]} at {[game.Where]}</div></xml>
+      | Some game => <xml><div class="details giants">{[timef "%H:%M" game.When]}: Giants play {[game.Who]} at {[game.Where]}</div></xml>
       val sharks_body = case sharks_game of
         None => <xml></xml>
-      | Some game => <xml><div class="details">{[timef "%H:%M" game.When]}: Sharks play {[game.Who]}</div></xml>
-      val (body_class, suck) = case (giants_game, sharks_game) of
-      | (Some _, _) => (giants, True)
-      | (_, Some _) => (sharks, True)
-      | _ => (null, False)
+      | Some game => <xml><div class="details sharks">{[timef "%H:%M" game.When]}: Sharks play {[game.Who]}</div></xml>
+      val giants_suck = suck_type giants_game when
+      val sharks_suck = suck_type sharks_game when
+      val body_class = case (giants_suck, sharks_suck) of
+        (Happy, Happy) => null
+      | (_, Happy) => giants
+      | (Happy, _) => sharks
+      | _ => doublesuck
+      val any_suck = giants_suck <> Happy || sharks_suck <> Happy
+      val happy_div = if not any_suck then <xml><span class="happy">No</span></xml> else <xml></xml>
+      fun generateYesNoDiv check classname =
+        let fun make classes value =
+          <xml><span class={classes}><div>{[value]}</div><div class="whichtime">{[check]}</div></span></xml>
+        in
+          if giants_suck = check && sharks_suck = check then make classname "Very" else
+          if sharks_suck = check                        then make (classes classname sharks) "Yes" else
+          if giants_suck = check                        then make (classes classname giants) "Yes" else
+          if any_suck                                   then make (classes classname happy) "No" else
+                                                             <xml></xml>
+        end
+      val morning_div = generateYesNoDiv Morning morning
+      val afternoon_div = generateYesNoDiv Afternoon afternoon
   in
     return
     <xml>
@@ -38,7 +87,11 @@ fun check_status when =
       </head>
       <body class={body_class} >
         <h1 class="header">Will Caltrain suck today?</h1>
-        <div class="yesno">{[if suck then "Yes" else "No"]}</div>
+        <div class="yesno">
+          {happy_div}
+          {morning_div}
+          {afternoon_div}
+        </div>
         {giants_body}
         {sharks_body}
         <div class="footer"><a link={about ()}>about</a></div>
