@@ -12,6 +12,7 @@ style yesno
 style header
 style details
 style footer
+style contact
 style giants
 style sharks
 style doublesuck
@@ -50,6 +51,7 @@ fun suck_type game when =
 fun check_status when =
   giants_game <- Giants.getActiveGame when;
   sharks_game <- Sharks.getActiveGame when;
+  currentTime <- now;
   let val giants_body = case giants_game of
         None => <xml></xml>
       | Some game => <xml><div class="details giants">{[timef "%H:%M" game.When]}: Giants play {[game.Who]} at {[game.Where]}</div></xml>
@@ -77,6 +79,7 @@ fun check_status when =
         end
       val morning_div = generateYesNoDiv Morning morning
       val afternoon_div = generateYesNoDiv Afternoon afternoon
+      val contact_email = "comments-" ^ (timef "%s" currentTime) ^ "@willcaltrainsucktoday.com"
   in
     return
     <xml>
@@ -93,7 +96,7 @@ fun check_status when =
         </div>
         {giants_body}
         {sharks_body}
-        <div class="footer"><a link={about ()}>about</a></div>
+        <div class="footer"><a link={about ()}>about</a><span class="contact">{[contact_email]}</span></div>
       </body>
     </xml>
   end
