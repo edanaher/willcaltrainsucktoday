@@ -104,7 +104,7 @@ fun index () =
   check_status when
   end
 
-fun at year month day =
+fun on year month day =
   let val when = fromDatetime year (month - 1) day 0 0 0 in
   check_status when
   end
