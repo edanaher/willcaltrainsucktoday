@@ -67,7 +67,7 @@ fun check_status when =
       val happy_div = if not any_suck then <xml><span class="happy">No</span></xml> else <xml></xml>
       fun generateYesNoDiv check classname =
         let fun make classes value =
-          <xml><span class={classes}><div>{[value]}</div><div class="whichtime">{[check]}</div></span></xml>
+          <xml><span class={classes}><div>{[value]}</div><!--div class="whichtime">{[check]}</div--></span></xml>
         in
           if giants_suck = check && sharks_suck = check then make classname "Very" else
           if sharks_suck = check                        then make (classes classname sharks) "Yes" else
@@ -89,7 +89,6 @@ fun check_status when =
         <h1 class="header">Will Caltrain suck today?</h1>
         <div class="yesno">
           {happy_div}
-          {morning_div}
           {afternoon_div}
         </div>
         {giants_body}
