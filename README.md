@@ -21,3 +21,4 @@ TODO
 - Break out southbound/northbound/morning/afternoon as appropriate given better information.
 - Add preferences to only show relevant information (e.g., commute/reverse commute care about different segments)
 - Add event submission form for one-off events (e.g., Giants parade)
+- See if [downdetector](https://downdetector.com/status/caltrain) will give me a free API key to detect unscheduled suckage.
