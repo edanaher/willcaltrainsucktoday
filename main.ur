@@ -65,7 +65,7 @@ fun parse_mdy mdy =
   end
 
 fun generate_menu date_signal menu_visible =
-  show <- signal menu_visible;
+  show_menu <- signal menu_visible;
   let val menu_button = <xml>
             <div class="menubutton" onclick={fn _ => set menu_visible True}>
               <div class="menubar" />
@@ -76,15 +76,22 @@ fun generate_menu date_signal menu_visible =
       val menu_area = <xml>
             <div class="menuoptions">
                 <ctextbox size=9 source={date_signal}>test</ctextbox>
-                <button onclick={fn _ => date <- get date_signal; alert("Loading " ^ timef "%D" (parse_mdy date))}>Check</button>
+                <button onclick={fn _ => date <- get date_signal; result <- rpc (day_status date); alert("Got ")}>Check</button>
             </div>
           </xml>
   in
   return <xml>
     <div class="menu">
-      {if show then menu_area else menu_button}
+      {if show_menu then menu_area else menu_button}
     </div>
   </xml>
+  end
+
+and day_status mdy =
+  let val when = parse_mdy mdy in
+    giants_game <- Giants.getActiveGame when;
+    sharks_game <- Sharks.getActiveGame when;
+    return (giants_game, sharks_game)
   end
 
 fun check_status when =
