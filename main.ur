@@ -54,6 +54,16 @@ fun suck_type game when =
     Happy
     end
 
+fun parse_mdy mdy =
+  let fun parseInt s default = case read s of None => default | Some n => n
+      val month = (parseInt (substring mdy 0 2) 2) - 1
+      val day = parseInt (substring mdy 3 2) 1
+      val year' = parseInt (substring mdy 6 2) 2015
+      val year = if year' < 100 then 2000 + year' else year'
+  in
+    fromDatetime year month day 0 0 0
+  end
+
 fun generate_menu date_signal menu_visible =
   show <- signal menu_visible;
   let val menu_button = <xml>
@@ -64,9 +74,10 @@ fun generate_menu date_signal menu_visible =
             </div>
           </xml>
       val menu_area = <xml>
-            <div class="menuoptions"><form>
-                <textbox {#Text} source={date_signal}>test</textbox>
-            </form></div>
+            <div class="menuoptions">
+                <ctextbox size=9 source={date_signal}>test</ctextbox>
+                <button onclick={fn _ => date <- get date_signal; alert("Loading " ^ timef "%D" (parse_mdy date))}>Check</button>
+            </div>
           </xml>
   in
   return <xml>

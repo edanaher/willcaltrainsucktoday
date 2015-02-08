@@ -15,8 +15,7 @@ rewrite style Main/*
 #
 # Let's use shorter URL's
 rewrite url Main/index 
-rewrite url Main/about about
-rewrite url Main/on on
+rewrite url Main/*
 #
 #
 # No .exe on the executable name
