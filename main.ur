@@ -13,6 +13,7 @@ style header
 style details
 style footer
 style contact
+style suck
 style giants
 style sharks
 style doublesuck
@@ -25,6 +26,7 @@ style menubar
 style menu
 style showmenu
 style menuoptions
+style bodydiv
 
 datatype suckage = Morning | Afternoon | Happy
 val suckage_eq = mkEq (fn a b => case (a, b) of
@@ -90,9 +92,9 @@ fun check_status when =
       val sharks_suck = suck_type sharks_game when
       val body_class = case (giants_suck, sharks_suck) of
         (Happy, Happy) => null
-      | (_, Happy) => giants
-      | (Happy, _) => sharks
-      | _ => doublesuck
+      | (_, Happy) => classes suck giants
+      | (Happy, _) => classes suck sharks
+      | _ => classes suck doublesuck
       val any_suck = giants_suck <> Happy || sharks_suck <> Happy
       val happy_div = if not any_suck then <xml><span class="happy">No</span></xml> else <xml></xml>
       fun generateYesNoDiv check classname =
@@ -117,7 +119,7 @@ fun check_status when =
         <link href="http://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet" type="text/css" />
       </head>
       <body class={body_class}>
-        <div onclick={fn _ => set menu_visible False}>
+        <div class="bodydiv" onclick={fn _ => set menu_visible False}>
           <h1 class="header">Will Caltrain suck today?</h1>
           <div class="yesno">
             {happy_div}
