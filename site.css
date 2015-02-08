@@ -22,6 +22,13 @@ body.giants, body.sharks, body.doublesuck { background: #000 }
 .doublesuck .happy, .giants .happy, .sharks .happy { color: #FFFFFF; }
 .whichtime { font-size: 32px; font-family: Helvetica, Arial, sans-serif}
 
+.menu { position: absolute; top: 0px; left: 0px; background-color: #CCCCCC; margin: 8px; border-radius: 8px; }
+.menubutton { height: 63px; width: 64px; margin: 8px; padding-top: 1px;
+              text-align: center; vertical-align: center; }
+.menubar { height: 8px; width: 56px; background-color: #EEEEEE; margin: 9px 4px 10px 4px; border-radius: 4px; }
+.menuoptions { padding: 18px; border-radius: 8px; }
+.giants .menubutton, .sharks .menubutton, .doublesuck .menubutton { background-color: #333333; }
+.giants .menubar, .sharks .menubar, .doublesuck .menubar { background-color: #666666; }
 
 /* =Responsive Design
     Media Queries
