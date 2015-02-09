@@ -66,7 +66,7 @@ fun parse_mdy mdy =
     fromDatetime year month day 0 0 0
   end
 
-fun generate_menu body_class loading_source date_input_source when_source giants_source sharks_source menu_visible =
+fun generate_menu body_class loading_source date_input_source when_source giants_source sharks_source permalink menu_visible =
   show_menu <- signal menu_visible;
   let val menu_button = <xml>
             <div class="menubutton" onclick={fn _ => set menu_visible True}>
@@ -92,6 +92,7 @@ fun generate_menu body_class loading_source date_input_source when_source giants
             <div class="menuoptions">
                 <ctextbox size=9 source={date_input_source} onkeypress={maybe_submit}>test</ctextbox>
                 <div class="clickable" onclick={fn _ => update_page ()}>Check</div>
+                <div>{permalink}</div>
             </div>
           </xml>
   in
@@ -166,6 +167,11 @@ fun check_status when =
         if timef "%D" currentTime = date
         then return <xml>today</xml>
         else return <xml>on {[date]}</xml>
+      val permalink =
+        <xml><dyn signal={
+          when <- signal when_source;
+          return <xml><a link={on (datetimeYear when) (datetimeMonth when + 1) (datetimeDay when)}>permalink</a></xml>
+        }></dyn></xml>
       val contact_email = "comments-" ^ (timef "%s" currentTime) ^ "@willcaltrainsucktoday.com"
   in
     return
@@ -176,7 +182,7 @@ fun check_status when =
         <link href="http://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet" type="text/css" />
       </head>
       <body>
-        <div dynClass={bc <- body_class (); return (classes bodydiv bc)} onclick={fn _ => set menu_visible False}>
+        <div dynClass={bc <- body_class (); return (classes bodydiv bc)} onmousedown={fn _ => set menu_visible False}>
           <h1 class="header">Will Caltrain suck <dyn signal={date_string ()} />?</h1>
           <div class="yesno">
             <dyn signal={happy_div ()} />
@@ -186,18 +192,18 @@ fun check_status when =
           <dyn signal={sharks_body ()} />
           <div class="footer"><a link={about ()}>about</a><div class="contact">{[contact_email]}</div></div>
         </div>
-        <dyn signal={bc <- body_class (); generate_menu bc loading_source date_input_source when_source giants_source sharks_source menu_visible} />
+        <dyn signal={bc <- body_class (); generate_menu bc loading_source date_input_source when_source giants_source sharks_source permalink menu_visible} />
       </body>
     </xml>
   end
 
-fun index () =
+and index () =
   currentTime <- now;
   let val when = fromDatetime (datetimeYear currentTime) (datetimeMonth currentTime) (datetimeDay currentTime) 0 0 0 in
   check_status when
   end
 
-fun on year month day =
+and on year month day =
   let val when = fromDatetime year (month - 1) day 0 0 0 in
   check_status when
   end
