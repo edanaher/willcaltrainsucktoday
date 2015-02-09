@@ -75,7 +75,7 @@ fun generate_menu body_class loading_source date_input_source when_source giants
               <div class="menubar" />
             </div>
           </xml>
-      fun update_page _ =
+      fun update_page () =
         date <- get date_input_source;
         let val when = (parse_mdy date) in
           set loading_source True;
@@ -87,10 +87,11 @@ fun generate_menu body_class loading_source date_input_source when_source giants
             set loading_source False
           end
         end
+      fun maybe_submit k = if k.KeyCode = 13 then update_page () else return {}
       val menu_area = <xml>
             <div class="menuoptions">
-                <ctextbox size=9 source={date_input_source}>test</ctextbox>
-                <div class="clickable" onclick={update_page}>Check</div>
+                <ctextbox size=9 source={date_input_source} onkeypress={maybe_submit}>test</ctextbox>
+                <div class="clickable" onclick={fn _ => update_page ()}>Check</div>
             </div>
           </xml>
   in
