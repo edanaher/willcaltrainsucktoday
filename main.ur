@@ -28,6 +28,7 @@ style showmenu
 style menuoptions
 style bodydiv
 style loading
+style clickable
 
 datatype suckage = Morning | Afternoon | Happy
 val suckage_eq = mkEq (fn a b => case (a, b) of
@@ -89,7 +90,7 @@ fun generate_menu body_class loading_source date_input_source when_source giants
       val menu_area = <xml>
             <div class="menuoptions">
                 <ctextbox size=9 source={date_input_source}>test</ctextbox>
-                <button onclick={update_page}>Check</button>
+                <div class="clickable" onclick={update_page}>Check</div>
             </div>
           </xml>
   in
