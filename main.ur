@@ -12,7 +12,6 @@ style yesno
 style header
 style details
 style footer
-style contact
 style suck
 style giants
 style sharks
@@ -197,7 +196,7 @@ fun check_status when =
           </div>
           <dyn signal={giants_body ()} />
           <dyn signal={sharks_body ()} />
-          <div class="footer"><a link={about ()}>about</a><div class="contact">{[contact_email]}</div></div>
+          <div class="footer"><a link={about ()}>about</a><active code={Js.linkContact contact_email} /></div>
         </div>
         <dyn signal={bc <- body_class (); generate_menu bc loading_source date_input_source invalid_date when_source giants_source sharks_source permalink menu_visible} />
       </body>
