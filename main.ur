@@ -57,14 +57,16 @@ fun suck_type game when =
     end
 
 fun parse_mdy mdy =
-  let fun parseInt s default = case read s of None => default | Some n => n
-      val month = (parseInt (substring mdy 0 2) 2) - 1
-      val day = parseInt (substring mdy 3 2) 1
-      val year' = parseInt (substring mdy 6 2) 2015
-      val year = if year' < 100 then 2000 + year' else year'
-  in
-    fromDatetime year month day 0 0 0
-  end
+  sp <- String.split mdy #"/";
+  case sp of (m, dy) =>
+  sp <- String.split dy #"/";
+  case sp of (d, y) =>
+  month' <- read m;
+  month <- return (month' - 1);
+  day <- read d;
+  year' <- read y;
+  year <- return (if year' < 100 then 2000 + year' else year');
+  return (fromDatetime year month day 0 0 0)
 
 fun generate_menu body_class loading_source date_input_source when_source giants_source sharks_source permalink menu_visible =
   show_menu <- signal menu_visible;
@@ -77,7 +79,9 @@ fun generate_menu body_class loading_source date_input_source when_source giants
           </xml>
       fun update_page () =
         date <- get date_input_source;
-        let val when = (parse_mdy date) in
+        case parse_mdy date of
+          None => alert("Bad date: " ^ date)
+        | Some when =>
           set loading_source True;
           rpcRes <- rpc (day_status when);
           let val (gg, sg) = rpcRes in
@@ -86,7 +90,6 @@ fun generate_menu body_class loading_source date_input_source when_source giants
             set when_source when;
             set loading_source False
           end
-        end
       fun maybe_submit k = if k.KeyCode = 13 then update_page () else return {}
       val menu_area = <xml>
             <div class="menuoptions">

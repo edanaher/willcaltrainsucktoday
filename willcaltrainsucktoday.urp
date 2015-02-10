@@ -26,6 +26,8 @@ database dbname=willcaltrainsucktoday user=willcaltrainsucktoday
 sql db.sql
 
 # And the modules:
+$/string
+$/option
 giants
 sharks
 main
