@@ -25,12 +25,8 @@ exe willcaltrainsucktoday
 database dbname=willcaltrainsucktoday user=willcaltrainsucktoday
 sql db.sql
 #
-# Javascript functions
-ffi js
-jsFunc Js.linkContact=js_linkContact
-clientOnly Js.linkContact
-file /js.js js.js
-script /js.js
+# Allow e-mail addresses
+allow url mailto:comments-*
 
 # And the modules:
 $/string

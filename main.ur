@@ -178,7 +178,7 @@ fun check_status when =
           when <- signal when_source;
           return <xml><a link={on (datetimeYear when) (datetimeMonth when + 1) (datetimeDay when)}>permalink</a></xml>
         }></dyn></xml>
-      val contact_email = "comments-" ^ (timef "%s" currentTime) ^ "@willcaltrainsucktoday.com"
+      val contact_email = bless ("mailto:comments-" ^ (timef "%s" currentTime) ^ "@willcaltrainsucktoday.com")
   in
     return
     <xml>
@@ -196,7 +196,10 @@ fun check_status when =
           </div>
           <dyn signal={giants_body ()} />
           <dyn signal={sharks_body ()} />
-          <div class="footer"><a link={about ()}>about</a><active code={Js.linkContact contact_email} /></div>
+          <div class="footer">
+            <a link={about ()}>about</a>
+            <a href={contact_email}>contact</a>
+          </div>
         </div>
         <dyn signal={bc <- body_class (); generate_menu bc loading_source date_input_source invalid_date when_source giants_source sharks_source permalink menu_visible} />
       </body>
