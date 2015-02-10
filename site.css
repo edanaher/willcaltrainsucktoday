@@ -34,6 +34,7 @@ a:hover { border-bottom: 2px solid #888; }
 .suck .menubar { background-color: #666666; }
 input { color: #333333 }
 .suck input { background-color: black; color: #CCCCCC }
+.invalidinput input { border-color: red }
 .clickable { border-radius: 8px; margin-top: 12px; margin-bottom: 8px; border: 1px solid #888888; cursor: default; background-color: white; color: black; }
 .suck .clickable { background-color: black; color: #CCCCCC }
 .menu a { color: #333; }

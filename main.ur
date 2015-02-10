@@ -29,6 +29,7 @@ style menuoptions
 style bodydiv
 style loading
 style clickable
+style invalidinput
 
 datatype suckage = Morning | Afternoon | Happy
 val suckage_eq = mkEq (fn a b => case (a, b) of
@@ -68,7 +69,7 @@ fun parse_mdy mdy =
   year <- return (if year' < 100 then 2000 + year' else year');
   return (fromDatetime year month day 0 0 0)
 
-fun generate_menu body_class loading_source date_input_source when_source giants_source sharks_source permalink menu_visible =
+fun generate_menu body_class loading_source date_input_source invalid_date when_source giants_source sharks_source permalink menu_visible =
   show_menu <- signal menu_visible;
   let val menu_button = <xml>
             <div class="menubutton" onclick={fn _ => set menu_visible True}>
@@ -80,7 +81,7 @@ fun generate_menu body_class loading_source date_input_source when_source giants
       fun update_page () =
         date <- get date_input_source;
         case parse_mdy date of
-          None => alert("Bad date: " ^ date)
+          None => set invalid_date True
         | Some when =>
           set loading_source True;
           rpcRes <- rpc (day_status when);
@@ -90,10 +91,12 @@ fun generate_menu body_class loading_source date_input_source when_source giants
             set when_source when;
             set loading_source False
           end
-      fun maybe_submit k = if k.KeyCode = 13 then update_page () else return {}
+      fun maybe_submit k = set invalid_date False; if k.KeyCode = 13 then update_page () else return {}
       val menu_area = <xml>
             <div class="menuoptions">
-                <ctextbox size=9 source={date_input_source} onkeypress={maybe_submit}>test</ctextbox>
+                <span dynClass={invalid <- signal invalid_date; return (if invalid then invalidinput else null)}>
+                  <ctextbox size=9 source={date_input_source} onkeypress={maybe_submit} />
+                </span>
                 <div class="clickable" onclick={fn _ => update_page ()}>Check</div>
                 <div>{permalink}</div>
             </div>
@@ -121,6 +124,7 @@ fun check_status when =
   when_source <- source when;
   date_input_source <- source (timef "%D" when);
   loading_source <- source False;
+  invalid_date <- source False;
   let fun giants_body () =
           game <- signal giants_source;
           case game of
@@ -195,7 +199,7 @@ fun check_status when =
           <dyn signal={sharks_body ()} />
           <div class="footer"><a link={about ()}>about</a><div class="contact">{[contact_email]}</div></div>
         </div>
-        <dyn signal={bc <- body_class (); generate_menu bc loading_source date_input_source when_source giants_source sharks_source permalink menu_visible} />
+        <dyn signal={bc <- body_class (); generate_menu bc loading_source date_input_source invalid_date when_source giants_source sharks_source permalink menu_visible} />
       </body>
     </xml>
   end
