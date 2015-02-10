@@ -68,8 +68,9 @@ fun parse_mdy mdy =
   year <- return (if year' < 100 then 2000 + year' else year');
   return (fromDatetime year month day 0 0 0)
 
-fun generate_menu body_class loading_source date_input_source invalid_date when_source giants_source sharks_source permalink menu_visible =
-  show_menu <- signal menu_visible;
+fun generate_menu body_class loading_source when when_source giants_source sharks_source permalink menu_visible =
+  invalid_date <- source False;
+  date_input_source <- source (timef "%D" when);
   let val menu_button = <xml>
             <div class="menubutton" onclick={fn _ => set menu_visible True}>
               <div class="menubar" />
@@ -101,11 +102,14 @@ fun generate_menu body_class loading_source date_input_source invalid_date when_
             </div>
           </xml>
   in
-  return <xml>
-    <div class={classes body_class menu}>
-      {if show_menu then menu_area else menu_button}
-    </div>
-  </xml>
+  return <xml><dyn signal={
+    show_menu <- signal menu_visible;
+    bc <- body_class ();
+    return <xml>
+      <div class={classes bc menu}>
+        {if show_menu then menu_area else menu_button}
+      </div>
+    </xml>} /></xml>
   end
 
 and day_status when =
@@ -121,9 +125,7 @@ fun check_status when =
   currentTime <- now;
   menu_visible <- source False;
   when_source <- source when;
-  date_input_source <- source (timef "%D" when);
   loading_source <- source False;
-  invalid_date <- source False;
   let fun giants_body () =
           game <- signal giants_source;
           case game of
@@ -180,6 +182,7 @@ fun check_status when =
         }></dyn></xml>
       val contact_email = bless ("mailto:comments-" ^ (timef "%s" currentTime) ^ "@willcaltrainsucktoday.com")
   in
+    menu_xml <- generate_menu body_class loading_source when when_source giants_source sharks_source permalink menu_visible;
     return
     <xml>
       <head>
@@ -201,7 +204,7 @@ fun check_status when =
             <a href={contact_email}>contact</a>
           </div>
         </div>
-        <dyn signal={bc <- body_class (); generate_menu bc loading_source date_input_source invalid_date when_source giants_source sharks_source permalink menu_visible} />
+        {menu_xml}
       </body>
     </xml>
   end
