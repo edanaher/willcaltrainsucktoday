@@ -17,7 +17,6 @@ And the contact link has a timestamp.  This will make it trivial to block if it 
 TODO
 ----
 
-- An option to show a given day without typing in the URL
 - Break out southbound/northbound/morning/afternoon as appropriate given better information.
 - Add preferences to only show relevant information (e.g., commute/reverse commute care about different segments)
 - Add event submission form for one-off events (e.g., Giants parade)
