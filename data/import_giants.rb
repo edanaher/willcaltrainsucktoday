@@ -14,7 +14,7 @@ File.open(ARGV[0]) do |file|
     hour = hour.to_i
     hour += 12 if hour < 12 && ampm == "P"
     who = teams.gsub(/Giants|at/, "").strip
-    home = (where == "AT&T Park" || where == "O.co Coliseum")
+    home = (where.start_with?("AT&T Park") || where == "O.co Coliseum" || where == "Oakland Coliseum - Oakland")
     puts "20#{year}-#{month}-#{day}|#{hour}:#{minute}|#{who}|#{home} (#{where})"
     db.exec("INSERT INTO uw_giants_games
              (uw_when, uw_who, uw_where, uw_home) VALUES
