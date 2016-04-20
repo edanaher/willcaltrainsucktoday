@@ -2,7 +2,7 @@
 
 require 'pg'
 
-db = PG.connect(dbname: 'willcaltrainsucktoday')
+db = PG.connect(:dbname => 'willcaltrainsucktoday')
 
 
 File.open(ARGV[0]) do |file|
